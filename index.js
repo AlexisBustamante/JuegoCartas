@@ -1,5 +1,5 @@
 //VARIABLES GLOBALES
-let cantCards = 6;//se raran 2 tarjetas por cada opcion
+let cantCards = 8;//se raran 2 tarjetas por cada opcion
 let arrCards = [];
 let container = document.getElementById("ctn-main");
 let numOrden = 0
@@ -19,14 +19,25 @@ function main() {
 
 function handleClick(e) {
     //
-    let id = e.path[2].id
-    let obj = arrCards.find((c) => c.id = id)
+    if (cantClick < 2) {
+        cantClick++;
 
-    //buscar dentro del array si esta seleccionado que
-    let divInner = e.path[1];
-    cantClick++;
-    divInner.classList.toggle('is-flipped');
-    console.log(cantClick);
+        let id = e.path[2].id
+        let obj = arrCards.find((c) => c.id = id)
+        let divInner = e.path[1];
+        divInner.classList.toggle('is-flipped');
+        arrSelected.push(obj);
+
+        if (cantClick === 2) {
+            console.log('entra?');
+
+            console.log(arrSelected);
+            //console.log(validate);
+            cantClick = 0;
+        }
+
+    }
+
 }
 
 function addEventToCards() {
@@ -50,6 +61,7 @@ function createArrCards() {
     for (let index = 0; index < cantCards; index++) {
         numImg = numImg == 4 ? 1 : numImg;
         for (let c = 0; c < 2; c++) {
+
             let numOrden = getRandomInt(1, 100);
             let front = `/img/cardFront${numImg}.JPG`;
             let obCard = {
@@ -59,12 +71,12 @@ function createArrCards() {
                 selected: false,
                 order: numOrden
             }
+
             arrCards.push(obCard);
             cardnum++;
         }
         numImg++;
     }
-
     //se ordena de menor a mayor por numero aleatorios
     arrCards.sort(((a, b) => a.order - b.order));
 }
@@ -87,14 +99,3 @@ function createCardDOM() {
     }
     container.innerHTML = htmlSring;
 }
-
-// const card = document.querySelector('.card__inner');
-// let cantidadClicks = 0;
-
-// card.addEventListener('click', function () {
-//     console.log(cantidadClicks)
-//     cantidadClicks++
-//
-//     console.log(cantidadClicks);
-// }
-// )
