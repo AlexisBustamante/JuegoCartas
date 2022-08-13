@@ -1,15 +1,16 @@
 //VARIABLES GLOBALES
-let cantCards = 8;//se raran 2 tarjetas por cada opcion
+let cantCards = 6;//se raran 2 tarjetas por cada opcion
 let arrCards = [];
 let container = document.getElementById("ctn-main");
 let numOrden = 0
 let cantClick = 0;
 let arrSelected = [];
+let arrDiv = [];
 
 //cuando el body este listo se ejecuta funcion MAIN
 document.body.onload = main();
 
-/***FUNCTIONS */
+/***FUNCTIONS PRINCIPALES */
 function main() {
     console.log('Starting')
     createArrCards();
@@ -17,28 +18,65 @@ function main() {
     addEventToCards();
 }
 
+
+//se define dentro del arreglo als cards que ya se marcaron para usar
+function checkedCards(arr, bool = true) {
+    arr.map((el) => {
+        let pos = arrCards.findIndex(card => card.id == el.id);
+        arrCards[pos].selected = bool;
+    })
+}
+
+//funcion que permite voltear las tarjetas QUE no coiciden tiene una espera de seugndos 
+//es necesaria que si no no se aprecia el cambio
+const flipCardsNoMatch = async (arr) => {
+    setTimeout(() =>
+        arr.forEach(element => element.classList.toggle('is-flipped'))
+        , 800);
+}
+
+
+const disableCardToMatch = async (arr) => {
+    setTimeout(() =>
+        arr.forEach(element => element.classList.toggle('is-disabled'))
+        , 800);
+}
+
 function handleClick(e) {
     //
     if (cantClick < 2) {
-        cantClick++;
-
         let id = e.path[2].id
-        let obj = arrCards.find((c) => c.id = id)
-        let divInner = e.path[1];
-        divInner.classList.toggle('is-flipped');
-        arrSelected.push(obj);
+        let obj = arrCards.find((c) => c.id == id)
 
-        if (cantClick === 2) {
-            console.log('entra?');
+        if (!obj.selected) {
+            cantClick++;
+            let divInner = e.path[1];
+            divInner.classList.toggle('is-flipped');
+            arrSelected.push(obj);
+            checkedCards(arrSelected);
+            arrDiv.push(divInner);
 
-            console.log(arrSelected);
-            //console.log(validate);
-            cantClick = 0;
+            if (cantClick === 2) {
+                //esto debería estar en una funcion afuera del bloque??????
+                if (todoIgual(arrSelected)) {
+                    checkedCards(arrSelected);
+                    disableCardToMatch(arrDiv);
+                } else {
+                    //console.log('son diferentes')
+                    flipCardsNoMatch(arrDiv);
+                    checkedCards(arrSelected, false);
+                }
+                arrSelected = [];
+                arrDiv = [];
+                cantClick = 0;
+            }
         }
-
     }
 
 }
+
+const todoIgual = (x) => x.every(v => v.img_front === x[0].img_front);
+
 
 function addEventToCards() {
     arrCards.map((card) => {
@@ -59,7 +97,9 @@ function createArrCards() {
     //esta funcion llenara el arrays de objetos con valores random
     //-crear numero random para el orde
     for (let index = 0; index < cantCards; index++) {
-        numImg = numImg == 4 ? 1 : numImg;
+
+        numImg = numImg == 7 ? 1 : numImg;
+
         for (let c = 0; c < 2; c++) {
 
             let numOrden = getRandomInt(1, 100);
@@ -92,6 +132,8 @@ function createCardDOM() {
                     <div class="card__face card__face--front" style="background-image: url('/img/cardBack.JPG')">
                     </div>
                     <div class="card__face card__face--back" style="background-image: url('${arrCards[index].img_front}')">
+                        <div class="eye-image">
+                        </div>
                     </div>
                 </div>
             </div>`

@@ -6,17 +6,20 @@
 
 main{
     display:flex;
-
+    height:100%;
 }
 .container{
-    padding: 10px;
-    background-color: rgb(62, 167, 62);
+    padding: 100px;
+    background-image: url('./img/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     width:100%;
     height:100%;
     display: grid;
     grid-template-columns: repeat(5,20vh);
     align-items: center;
-    gap: 5px;
+    gap: 15px;
     justify-content: center;
 }
 
@@ -49,10 +52,23 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 .card__inner.is-flipped {
     transform: rotateY(180deg);
 }
+.card__inner.is-disabled .eye-image{
+    height:100%;
+    width:100%;
+    opacity: 0.5;
+    background-color: grey;
+    background-image: url('./img/icon-view.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+        border-radius: 8px;
+}
+
 .card__face--back {
     /*background-image: url('img/cardFront1.JPG');*/
     transform: rotateY(180deg);
