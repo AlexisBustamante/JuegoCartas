@@ -250,10 +250,10 @@ function createArrCards() {
         numImg = numImg == 16 ? 1 : numImg;
         for (let c = 0; c < 2; c++) {
             let numOrden = getRandomInt(1, 100);
-            let front = `/img/cardFront${numImg}.JPG`;
+            let front = `./img/cardFront${numImg}.JPG`;
             let obCard = {
                 id: `card${cardnum}`,
-                img_back: '/img/cardback.JPG',
+                img_back: './img/cardback.JPG',
                 img_front: front,
                 selected: false,
                 order: numOrden
@@ -275,7 +275,7 @@ function createCardDOM() {
         let html = `
             <div class="card" id="${arrCards[index].id}">
                 <div class="card__inner" id="inner_${arrCards[index].id}">
-                    <div class="card__face card__face--front" style="background-image: url('/img/cardBack.JPG')">
+                    <div class="card__face card__face--front" style="background-image: url('./img/cardBack.JPG')">
                     </div>
                     <div class="card__face card__face--back" style="background-image: url('${arrCards[index].img_front}')">
                         <div class="eye-image">
