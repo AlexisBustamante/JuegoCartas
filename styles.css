@@ -58,9 +58,21 @@ main{
     border: 1px solid #ccc;
     transition: opacity 2s linear;
 }
+.rankig{
+    list-style: none;
+}
+.rankig li{
+    list-style: none;
+    padding:15px;
+}
+.next{
+    border-radius: 15px;
+        border: 2px solid #ccc;
+        padding:15px;
+}
 .next:hover{
     cursor: pointer;
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    /*-webkit-text-stroke: 1px rgb(0, 0, 0);*/
     font-size: 25px;
 }
 .container-info-player{

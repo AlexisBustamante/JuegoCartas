@@ -7,11 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
-    <title>Document</title>
+    <title>ToMatchCard</title>
 </head>
 
 <body>
     <main>
+        <div class="Level_complete" id="welcome">
+            <h1>Insert Coin!!</h1>
+            <br>
+            <br>
+            <br>
+            <span class="next" id="start">Start!</span>
+        </div>
         <div class="Level_complete" id="Level_complete">
             <h1>Level Completed!</h1>
             <br>
@@ -22,11 +29,32 @@
             <br>
             <br>
             <span class="next" id="next">Go Next Level!</span>
-
         </div>
         <div class="game_over" id="game_over">
+            <h1>RANKING</h1>
+            <br>
+            <br>
+            <ul class="rankig">
+                <li>
+                    <h5>Peracles : 1548</h5>
+                </li>
+                <li>
+                    <h5>Cunito : 768</h5>
+                </li>
+                <li>
+                    <h5>Ale : 500</h5>
+                </li>
+                <li>
+                    <h5>Caezita : 200</h5>
+                </li>
+                <li>
+                    <h5>Nelsi : 199</h5>
+                </li>
+            </ul>
+            <br>
+            <br>
             <h1>GAME OVER</h1>
-            <span>Retry!</span>
+            <span class="next" id="retry">Retry!</span>
         </div>
         <div class="container" id="ctn-main">
             <!-- <div class="card" id="card1">
@@ -38,7 +66,7 @@
                 </div>
             </div> -->
         </div>
-        <div class="container-info-player">
+        <div class="container-info-player" id="container-info-player">
             <img class="avatar" src="/img/avatar.JPG">
             <h1>Time</h1>
             <span id="time">0</span>

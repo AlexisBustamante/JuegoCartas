@@ -25,27 +25,52 @@ let spanTime2 = document.getElementById("time_c");
 let spanUsage2 = document.getElementById("usage_c");
 let spanScoreTotal = document.getElementById("score_total");
 let next = document.getElementById("next");
-next.onclick = nextLevel;
+let retry = document.getElementById("retry");
+let divWelcome = document.getElementById("welcome");
+let divPlayer = document.getElementById("container-info-player");
+let spanStart = document.getElementById("start");
 
-document.body.onload = main(Level);
+retry.onclick = retryLevel;
+next.onclick = nextLevel;
+spanStart.onclick = startGame;
+
+divWelcome.style.display = 'flex';
+divPlayer.style.display = 'none';
+container.style.display = 'none';
+
+document.body.onload = () => {
+    console.log('on load;')
+}
+
+function startGame(params) {
+    divWelcome.style.display = 'none';
+    divPlayer.style.display = 'flex';
+    container.style.display = 'flex';
+
+    main(1);
+}
 
 /***FUNCTIONS PRINCIPALES */
 function main(levelMain = 1) {
     console.log('Starting');
-    console.log(levelMain);
     //spanScore.textContent = 1 + 1;
     showWinner(false);
     showGameOver(false);
     initializeVariables();
-    calcCards();
+    calcCardsAndTime();
     createArrCards();
     createCardDOM();
     addEventToCards();
     runTime();
     validateWinOrOver();
 }
+function retryLevel() {
+    Level = 1;
+    cantCards = 1;
+    main(Level);
+}
 function nextLevel() {
-    console.log('level');
+    // console.log('level');
     Level++
     main(Level);
 }
@@ -71,11 +96,13 @@ function initializeVariables() {
     spanTime2.textContent = timeInit;
     spanUsage2.textContent = usage;
 }
-function calcCards() {
+function calcCardsAndTime() {
     cantCards = cantCards + 1;
+
 }
 
 function showWinner(bool) {
+
     bool ? divLevelComplete.style.display = 'flex'
         : divLevelComplete.style.display = 'none'
     bool ? container.style.display = 'none'
@@ -220,11 +247,8 @@ function createArrCards() {
     //esta funcion llenara el arrays de objetos con valores random
     //-crear numero random para el orde
     for (let index = 0; index < cantCards; index++) {
-
         numImg = numImg == 16 ? 1 : numImg;
-
         for (let c = 0; c < 2; c++) {
-
             let numOrden = getRandomInt(1, 100);
             let front = `/img/cardFront${numImg}.JPG`;
             let obCard = {
@@ -234,7 +258,6 @@ function createArrCards() {
                 selected: false,
                 order: numOrden
             }
-
             arrCards.push(obCard);
             cardnum++;
         }
