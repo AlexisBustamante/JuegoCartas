@@ -1,23 +1,130 @@
 //VARIABLES GLOBALES
-let cantCards = 6;//se raran 2 tarjetas por cada opcion
+//const path = require('./img/imgCardsfront');
+let cantCards = 1;//se raran 2 tarjetas por cada opcion
 let arrCards = [];
 let container = document.getElementById("ctn-main");
 let numOrden = 0
 let cantClick = 0;
 let arrSelected = [];
 let arrDiv = [];
+let spanScore = document.getElementById("score");
+let score = 0;
+let spanTime = document.getElementById("time");
+let timeInit = 30;//tiempo de los niveles
+let spanUsage = document.getElementById("usages");
+let usage = 0;
+let divGameOver = document.getElementById("game_over");
+let repeat = false;
+let divLevelComplete = document.getElementById("Level_complete");
+let idInterval = 0;
+let spanLevel = document.getElementById("level");
+let Level = 1;
+//cuando el body este listo se ejecuta funcion MAIle
+let spanScore2 = document.getElementById("score_c");
+let spanTime2 = document.getElementById("time_c");
+let spanUsage2 = document.getElementById("usage_c");
+let spanScoreTotal = document.getElementById("score_total");
+let next = document.getElementById("next");
+next.onclick = nextLevel;
 
-//cuando el body este listo se ejecuta funcion MAIN
-document.body.onload = main();
+document.body.onload = main(Level);
 
 /***FUNCTIONS PRINCIPALES */
-function main() {
-    console.log('Starting')
+function main(levelMain = 1) {
+    console.log('Starting');
+    console.log(levelMain);
+    //spanScore.textContent = 1 + 1;
+    showWinner(false);
+    showGameOver(false);
+    initializeVariables();
+    calcCards();
     createArrCards();
     createCardDOM();
     addEventToCards();
+    runTime();
+    validateWinOrOver();
+}
+function nextLevel() {
+    console.log('level');
+    Level++
+    main(Level);
 }
 
+function initializeVariables() {
+    arrCards = [];
+    numOrden = 0
+    cantClick = 0;
+    arrSelected = [];
+    arrDiv = [];
+    score = 0;
+    timeInit = 30;//tiempo de los niveles
+    usage = 0;
+    repeat = false;
+    idInterval = 0;
+    spanLevel.textContent = Level;
+
+    spanScore.textContent = score;
+    spanTime.textContent = timeInit;
+    spanUsage.textContent = usage;
+
+    spanScore2.textContent = score;
+    spanTime2.textContent = timeInit;
+    spanUsage2.textContent = usage;
+}
+function calcCards() {
+    cantCards = cantCards + 1;
+}
+
+function showWinner(bool) {
+    bool ? divLevelComplete.style.display = 'flex'
+        : divLevelComplete.style.display = 'none'
+    bool ? container.style.display = 'none'
+        : container.style.display = 'flex'
+
+    spanScore2.textContent = score;
+    spanTime2.textContent = timeInit;
+    spanUsage2.textContent = usage;
+    spanTime.textContent = timeInit;
+    let result = (score * timeInit) - (usage * 10)
+    spanScoreTotal.textContent = result
+
+}
+function showGameOver(bool) {
+    bool ? divGameOver.style.display = 'flex'
+        : divGameOver.style.display = 'none'
+    bool ? container.style.display = 'none'
+        : container.style.display = 'flex'
+}
+//esta funcionse 
+//encarga de verificar a medida que se juega si gana o pierde
+function validateWinOrOver() {
+    var idIntervalW = setInterval(() => {
+        let arrResult = arrCards.filter(e => e.selected == true);
+        if (timeInit == 0) {
+            //se acabó el tiempo
+            showGameOver(true);
+        } else {
+            if (arrResult.length == arrCards.length) {
+                //console.log('WINNER!!!!!')
+                clearInterval(idIntervalW);//para parar el proceso del interval
+                clearInterval(idIntervalTime);
+                showWinner(true);
+            }
+        }
+    }, 900);
+}
+
+function runTime() {
+    idIntervalTime = setInterval(() => {
+        spanTime.textContent = timeInit;
+        timeInit--;
+        if (timeInit == 0) {
+            timeInit = 0;//por el momento lo reinicio
+            spanTime.textContent = timeInit;
+            clearInterval(idIntervalTime);//para parar el proceso del interval
+        }
+    }, 1000);
+}
 
 //se define dentro del arreglo als cards que ya se marcaron para usar
 function checkedCards(arr, bool = true) {
@@ -33,13 +140,25 @@ const flipCardsNoMatch = async (arr) => {
     setTimeout(() =>
         arr.forEach(element => element.classList.toggle('is-flipped'))
         , 800);
+    addUsages();//agrego un uso por cada equivocación
 }
-
 
 const disableCardToMatch = async (arr) => {
     setTimeout(() =>
         arr.forEach(element => element.classList.toggle('is-disabled'))
         , 800);
+    addScore();
+
+}
+
+function addScore() {
+    score = score + 10;
+    spanScore.textContent = score;
+}
+
+function addUsages() {
+    usage++
+    spanUsage.textContent = usage;
 }
 
 function handleClick(e) {
@@ -47,35 +166,39 @@ function handleClick(e) {
     if (cantClick < 2) {
         let id = e.path[2].id
         let obj = arrCards.find((c) => c.id == id)
-
-        if (!obj.selected) {
-            cantClick++;
-            let divInner = e.path[1];
-            divInner.classList.toggle('is-flipped');
-            arrSelected.push(obj);
-            checkedCards(arrSelected);
-            arrDiv.push(divInner);
-
-            if (cantClick === 2) {
-                //esto debería estar en una funcion afuera del bloque??????
-                if (todoIgual(arrSelected)) {
-                    checkedCards(arrSelected);
-                    disableCardToMatch(arrDiv);
-                } else {
-                    //console.log('son diferentes')
-                    flipCardsNoMatch(arrDiv);
-                    checkedCards(arrSelected, false);
+        //console.log(obj);
+        //agregue este if ya que//cuando se da vuelta la tarjeta 
+        //y se hace click rápido el ob no existe 
+        if (obj) {
+            if (!obj.selected) {
+                cantClick++;
+                let divInner = e.path[1];
+                divInner.classList.toggle('is-flipped');
+                arrSelected.push(obj);
+                checkedCards(arrSelected);
+                arrDiv.push(divInner);
+                if (cantClick === 2) {
+                    //esto debería estar en una funcion afuera del bloque??????
+                    if (allMatch(arrSelected)) {
+                        checkedCards(arrSelected);
+                        disableCardToMatch(arrDiv);
+                    } else {
+                        //console.log('son diferentes')
+                        flipCardsNoMatch(arrDiv);
+                        checkedCards(arrSelected, false);
+                    }
+                    arrSelected = [];
+                    arrDiv = [];
+                    cantClick = 0;
                 }
-                arrSelected = [];
-                arrDiv = [];
-                cantClick = 0;
             }
         }
+
     }
 
 }
 
-const todoIgual = (x) => x.every(v => v.img_front === x[0].img_front);
+const allMatch = (x) => x.every(v => v.img_front === x[0].img_front);
 
 
 function addEventToCards() {
@@ -98,7 +221,7 @@ function createArrCards() {
     //-crear numero random para el orde
     for (let index = 0; index < cantCards; index++) {
 
-        numImg = numImg == 7 ? 1 : numImg;
+        numImg = numImg == 16 ? 1 : numImg;
 
         for (let c = 0; c < 2; c++) {
 
@@ -139,5 +262,6 @@ function createCardDOM() {
             </div>`
         htmlSring = htmlSring + html;
     }
+    container.innerHTML = '';
     container.innerHTML = htmlSring;
 }

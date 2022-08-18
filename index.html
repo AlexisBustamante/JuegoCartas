@@ -6,11 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
     <title>Document</title>
 </head>
 
 <body>
     <main>
+        <div class="Level_complete" id="Level_complete">
+            <h1>Level Completed!</h1>
+            <br>
+            <span>Time : <span id="time_c">0</span></span>
+            <span>Score : <span id="score_c">0</span> X time</span>
+            <span>Usage : <span id="usage_c">0</span> x 10</span>
+            <span>Score Total : <span id="score_total">0</span></span>
+            <br>
+            <br>
+            <span class="next" id="next">Go Next Level!</span>
+
+        </div>
+        <div class="game_over" id="game_over">
+            <h1>GAME OVER</h1>
+            <span>Retry!</span>
+        </div>
         <div class="container" id="ctn-main">
             <!-- <div class="card" id="card1">
                 <div class="card__inner">
@@ -21,9 +38,18 @@
                 </div>
             </div> -->
         </div>
-        <div class="container2">
-
-        </div>
+        <div class="container-info-player">
+            <img class="avatar" src="/img/avatar.JPG">
+            <h1>Time</h1>
+            <span id="time">0</span>
+            <h1>Score</h1>
+            <span id="score">0</span>
+            <h1>Usage</h1>
+            <span id="usages">0</span>
+            <h1>LEVEL</h1>
+            <span id="level">1</span>
+            <br>
+            <p>Encuentra todos los Pokemons antes de que acabe el tiempo</p>
     </main>
     <footer>
 

@@ -1,0 +1,3 @@
+# ignorar todos los archivos terminados en .pdf dentro de la carpeta doc y sus subdirectorios
+img/imgCardsfront/*.jpg
+

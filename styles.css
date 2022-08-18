@@ -1,31 +1,98 @@
+@import 'https://fonts.googleapis.com/css?family=Press+Start+2P';
 *{
   padding:0px;
   margin:0px;
   box-sizing: border-box;
 }
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Press Start 2P';
+}
 
 main{
     display:flex;
     height:100%;
-}
-.container{
-    padding: 100px;
     background-image: url('./img/fondo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    padding: 10px;
+}
+.container{
     width:100%;
     height:100%;
-    display: grid;
-    grid-template-columns: repeat(5,20vh);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    /* grid-template-columns: repeat(8,1fr); */
     align-items: center;
-    gap: 15px;
     justify-content: center;
 }
-
+.game_over{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        color: #ccc;
+        padding: 15px;
+        margin: 0px 10px 0px 10px;
+        background-color: rgba(0, 0, 0, 0.600);
+        border-radius: 15px;
+        border: 1px solid #ccc;
+}
+.Level_complete{
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    color: #ccc;
+    padding: 15px;
+    margin: 0px 10px 0px 10px;
+    background-color: rgba(0, 0, 0, 0.600);
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    transition: opacity 2s linear;
+}
+.next:hover{
+    cursor: pointer;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    font-size: 25px;
+}
+.container-info-player{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-around;
+    width:40%;
+    color: #ccc;
+    padding:15px;
+    background-color:rgba(0, 0, 0, 0.600);
+    border-radius:15px;
+    border:1px solid #ccc;
+}
+.container-info-player h1,span{
+    color: #ccc;
+    padding:4px;
+    font-size: 20px; 
+    font-weight: bold;
+    margin: 9px;
+}
+.avatar {
+    padding: 5px;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    object-position: center;
+}
 .card {
-    width: 18vh;
-    height:26vh;
+    width: 12vh;
+    height:18vh;
 }
 .card__inner {
     width: 100%;
