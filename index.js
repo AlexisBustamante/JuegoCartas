@@ -275,7 +275,7 @@ function createCardDOM() {
         let html = `
             <div class="card" id="${arrCards[index].id}">
                 <div class="card__inner" id="inner_${arrCards[index].id}">
-                    <div class="card__face card__face--front" style="background-image: url('./img/cardBack.JPG')">
+                    <div class="card__face card__face--front" style="background-image: url('./img/cardback.JPG')">
                     </div>
                     <div class="card__face card__face--back" style="background-image: url('${arrCards[index].img_front}')">
                         <div class="eye-image">

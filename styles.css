@@ -126,7 +126,6 @@ main{
 }
 
 .card__face--front {
-    /*background-image: url('img/cardBack.JPG');*/
     background-size: cover;
     display: flex;
     align-items: center;
