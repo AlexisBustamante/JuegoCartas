@@ -1,6 +1,6 @@
 //VARIABLES GLOBALES
 //const path = require('./img/imgCardsfront');
-let cantCards = 11;//se raran 2 tarjetas por cada opcion
+let cantCards = 2;//se raran 2 tarjetas por cada opcion
 let arrCards = [];
 let container = document.getElementById("ctn-main");
 let numOrden = 0
@@ -86,7 +86,7 @@ function initializeVariables() {
     arrSelected = [];
     arrDiv = [];
     score = 0;
-    timeInit = 100;//tiempo de los niveles
+    timeInit = 40;//tiempo de los niveles
     usage = 0;
     repeat = false;
     idInterval = 0;
