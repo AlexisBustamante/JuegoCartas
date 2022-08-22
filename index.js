@@ -1,6 +1,6 @@
 //VARIABLES GLOBALES
 //const path = require('./img/imgCardsfront');
-let cantCards = 1;//se raran 2 tarjetas por cada opcion
+let cantCards = 11;//se raran 2 tarjetas por cada opcion
 let arrCards = [];
 let container = document.getElementById("ctn-main");
 let numOrden = 0
@@ -29,6 +29,11 @@ let retry = document.getElementById("retry");
 let divWelcome = document.getElementById("welcome");
 let divPlayer = document.getElementById("container-info-player");
 let spanStart = document.getElementById("start");
+let cardAdded = 1;
+let grid = {
+    colum: 3,
+    row: 2
+};
 
 retry.onclick = retryLevel;
 next.onclick = nextLevel;
@@ -39,14 +44,13 @@ divPlayer.style.display = 'none';
 container.style.display = 'none';
 
 document.body.onload = () => {
-    console.log('on load;')
+    //console.log('on load;')
 }
 
-function startGame(params) {
+function startGame() {
     divWelcome.style.display = 'none';
     divPlayer.style.display = 'flex';
     container.style.display = 'flex';
-
     main(1);
 }
 
@@ -82,7 +86,7 @@ function initializeVariables() {
     arrSelected = [];
     arrDiv = [];
     score = 0;
-    timeInit = 30;//tiempo de los niveles
+    timeInit = 100;//tiempo de los niveles
     usage = 0;
     repeat = false;
     idInterval = 0;
@@ -98,7 +102,7 @@ function initializeVariables() {
 }
 function calcCardsAndTime() {
     cantCards = cantCards + 1;
-
+    timeInit = timeInit + (Level * 4);//el nivel por 4 para los segundos
 }
 
 function showWinner(bool) {
@@ -113,7 +117,8 @@ function showWinner(bool) {
     spanUsage2.textContent = usage;
     spanTime.textContent = timeInit;
     let result = (score * timeInit) - (usage * 10)
-    spanScoreTotal.textContent = result
+    spanScoreTotal.textContent = result;
+
 
 }
 function showGameOver(bool) {
@@ -287,4 +292,5 @@ function createCardDOM() {
     }
     container.innerHTML = '';
     container.innerHTML = htmlSring;
+
 }
