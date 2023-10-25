@@ -196,15 +196,14 @@ function addUsages() {
 function handleClick(e) {
     //
     if (cantClick < 2) {
-        let id = e.path[2].id
+        let id = this.id
         let obj = arrCards.find((c) => c.id == id)
-        //console.log(obj);
         //agregue este if ya que//cuando se da vuelta la tarjeta 
         //y se hace click rápido el ob no existe 
         if (obj) {
             if (!obj.selected) {
                 cantClick++;
-                let divInner = e.path[1];
+                let divInner = document.getElementById("inner_" + id);
                 divInner.classList.toggle('is-flipped');
                 arrSelected.push(obj);
                 checkedCards(arrSelected);
@@ -278,7 +277,7 @@ function createCardDOM() {
     let htmlSring = '';
     for (let index = 0; index < arrCards.length; index++) {
         let html = `
-            <div class="card" id="${arrCards[index].id}">
+            <div class="card" id="${arrCards[index].id}" data-inicial="${index}">
                 <div class="card__inner" id="inner_${arrCards[index].id}">
                     <div class="card__face card__face--front" style="background-image: url('./img/cardback.JPG')">
                     </div>
